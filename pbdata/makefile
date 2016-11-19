@@ -17,7 +17,9 @@ shared: libpbdata${SH_LIB_EXT}
 
 paths := . matrix reads metagenome qvs saf utils loadpulses alignment amos sam
 paths := ${paths} $(patsubst %,${THISDIR}%,${paths})
-sources := $(shell find ${THISDIR} -name '*.cpp')
+# Avoid trailing slash, since OSX find keeps it.
+THISDIRX := $(patsubst %/,%,${THISDIR})
+sources := $(shell find ${THISDIRX} -name '*.cpp')
 sources := $(notdir ${sources})
 objects := $(sources:.cpp=.o)
 shared_objects := $(sources:.cpp=.shared.o)

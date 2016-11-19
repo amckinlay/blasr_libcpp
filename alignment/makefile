@@ -25,7 +25,9 @@ paths := . simulator format files utils tuples statistics qvs suffixarray \
 	algorithms/alignment algorithms/alignment/sdp algorithms/anchoring algorithms/compare algorithms/sorting \
 	query
 paths := ${paths} $(patsubst %,${THISDIR}%,${paths})
-sources := $(shell find ${THISDIR} -name '*.cpp')
+# Avoid trailing slash, since OSX find keeps it.
+THISDIRX := $(patsubst %/,%,${THISDIR})
+sources := $(shell find ${THISDIRX} -name '*.cpp')
 
 ifdef nohdf
 sources := $(filter-out ${THISDIR}files/% ${THISDIR}utils/FileOfFileNames.cpp ${THISDIR}format/SAMHeaderPrinter.cpp, $(sources))
